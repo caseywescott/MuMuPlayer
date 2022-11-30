@@ -14,9 +14,9 @@ import { localized } from "../../../common/localize/localizedString"
 import { programChangeMidiEvent } from "../../../common/midi/MidiEvent"
 import {
   createNoteMuMu,
-  fastForwardOneBar,
+  fastForwardOneNote,
   playOrPause,
-  rewindOneBar,
+  rewindOneNote,
   stop,
   toggleEnableLoop,
 } from "../../actions"
@@ -111,8 +111,8 @@ export const TransportPanel: FC = observer(() => {
 
   const onClickPlay = playOrPause(rootStore)
   const onClickStop = stop(rootStore)
-  const onClickBackward = rewindOneBar(rootStore)
-  const onClickForward = fastForwardOneBar(rootStore)
+  const onClickBackward = rewindOneNote(rootStore)
+  const onClickForward = fastForwardOneNote(rootStore)
   const onClickRecord = toggleRecording(rootStore)
   const onClickEnableLoop = toggleEnableLoop(rootStore)
   const onClickMetronone = useCallback(() => {

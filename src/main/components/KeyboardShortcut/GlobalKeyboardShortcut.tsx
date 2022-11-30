@@ -1,16 +1,4 @@
 import { FC, useEffect } from "react"
-import {
-  fastForwardOneBar,
-  nextTrack,
-  playOrPause,
-  previousTrack,
-  rewindOneBar,
-  stop,
-  toggleGhost,
-  toggleMute,
-  toggleSolo,
-} from "../../actions"
-import { redo, undo } from "../../actions/history"
 import { useStores } from "../../hooks/useStores"
 import { KeyboardShortcut } from "./KeyboardShortcut"
 
@@ -47,8 +35,10 @@ export const GlobalKeyboardShortcut: FC = () => {
 
   return (
     <KeyboardShortcut
-      actions={[
-        { code: "Space", run: playOrPause(rootStore) },
+      actions={
+        [
+          /*
+          { code: "Space", run: playOrPause(rootStore) },
         { code: "KeyZ", metaKey: true, shiftKey: true, run: redo(rootStore) },
         { code: "KeyZ", metaKey: true, shiftKey: false, run: undo(rootStore) },
         { code: "KeyY", metaKey: true, run: redo(rootStore) },
@@ -81,7 +71,9 @@ export const GlobalKeyboardShortcut: FC = () => {
           metaKey: true,
           run: () => (rootStore.router.path = "/tempo"),
         },
-      ]}
+        */
+        ]
+      }
     />
   )
 }

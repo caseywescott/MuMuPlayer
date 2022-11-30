@@ -75,6 +75,59 @@ export const fastForwardOneBar = (rootStore: RootStore) => () => {
   }
 }
 
+// this works but I need to generalize this
+
+export const fastForwardOneNote = (rootStore: RootStore) => () => {
+  const { song, player, pianoRollStore } = rootStore
+  const { quantizer } = pianoRollStore
+
+  const e =
+    song.conductorTrack?.getTimeSignatureEvent(player.position) ??
+    defaultTimeSignature
+  const ticksPerBeat = (song.timebase * 4) / e.denominator
+  const ticksPerMeasure = ticksPerBeat * e.numerator
+
+  //player.position = player.position + 480 //quantizer.round(player.position + ticksPerMeasure)
+
+  // Simplifying the Quantization
+
+  player.position = Math.round(player.position / 480) * 480 + 480
+  // make sure player doesn't move out of sight to the right
+  const { transform, scrollLeft } = pianoRollStore
+  const x = transform.getX(player.position)
+  const screenX = x - scrollLeft
+  if (screenX > pianoRollStore.canvasWidth * 0.7) {
+    pianoRollStore.setScrollLeftInPixels(x - pianoRollStore.canvasWidth * 0.7)
+  }
+}
+
+// this works but I need to generalize this
+
+export const rewindOneNote = (rootStore: RootStore) => () => {
+  const { song, player, pianoRollStore } = rootStore
+  const { quantizer } = pianoRollStore
+
+  const e =
+    song.conductorTrack?.getTimeSignatureEvent(player.position) ??
+    defaultTimeSignature
+  const ticksPerBeat = (song.timebase * 4) / e.denominator
+  const ticksPerMeasure = ticksPerBeat * e.numerator
+  if (player.position > 480) {
+    //player.position = player.position - 480 //quantizer.round(player.position + ticksPerMeasure)
+    player.position = Math.round(player.position / 480) * 480 - 480
+  } else {
+    player.position = 0 //quantizer.round(player.position + ticksPerMeasure)
+  }
+
+  // make sure player doesn't move out of sight to the right
+  const { transform, scrollLeft } = pianoRollStore
+  const x = transform.getX(player.position)
+  const screenX = x - scrollLeft
+  if (screenX > pianoRollStore.canvasWidth * 0.7) {
+    pianoRollStore.setScrollLeftInPixels(x - pianoRollStore.canvasWidth * 0.7)
+  }
+}
+
 export const nextTrack = (rootStore: RootStore) => () => {
   const { song } = rootStore
   song.selectTrack(Math.min(song.selectedTrackId + 1, song.tracks.length - 1))

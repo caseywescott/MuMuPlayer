@@ -3,6 +3,7 @@ import { observer } from "mobx-react-lite"
 import { FC } from "react"
 import { useStores } from "../../hooks/useStores"
 import { ArrangeEditor } from "../ArrangeView/ArrangeEditor"
+import { ExportDialog } from "../ExportDialog/ExportDialog"
 import { PianoRollEditor } from "../PianoRoll/PianoRollEditor"
 import { TempoEditor } from "../TempoGraph/TempoEditor"
 import { TransportPanel } from "../TransportPanel/TransportPanel"
@@ -37,5 +38,6 @@ const Routes: FC = observer(() => {
 export const RootView: FC = () => (
   <>
     <TransportPanel />
+    <ExportDialog />
   </>
 )
